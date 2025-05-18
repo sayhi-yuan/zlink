@@ -86,8 +86,8 @@ type KafkaMessage[E any] struct {
 	Message E              `desc:"解析后的消息"`
 }
 
-func (source *kafkaSource[E]) ReadMessage() <-chan KafkaMessage[E] {
-	queue := make(chan KafkaMessage[E], 100)
+func (source *kafkaSource[E]) ReadMessage(max int) <-chan KafkaMessage[E] {
+	queue := make(chan KafkaMessage[E], max)
 
 	go func() {
 		defer close(queue)
